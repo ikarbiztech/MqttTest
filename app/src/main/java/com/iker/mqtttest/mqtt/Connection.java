@@ -1,4 +1,4 @@
-package com.iker.mqttpahotest.mqtt;
+package com.iker.mqtttest.mqtt;
 
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +12,8 @@ import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
 
-import com.iker.mqttpahotest.R;
+
+import com.iker.mqtttest.R;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 

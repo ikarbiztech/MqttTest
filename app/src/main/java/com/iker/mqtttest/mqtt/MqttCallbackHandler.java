@@ -1,6 +1,5 @@
 
-package com.iker.mqttpahotest.mqtt
-        ;
+package com.iker.mqtttest.mqtt;
 
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -10,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.iker.mqttpahotest.R;
+import com.iker.mqtttest.R;
 
 
 /**
@@ -60,7 +59,7 @@ public class MqttCallbackHandler implements MqttCallback {
 
       //notify the user
 //      Notify.notifcation(context, message, intent, R.string.notifyTitle_connectionLost);
-      Log.i("com.iker.mqttpahotest.MqttCallbackHandler.connectionLost","Error, connectionLost");
+      Log.i("connectionLost","Error, connectionLost");
     }
   }
 
@@ -94,7 +93,7 @@ public class MqttCallbackHandler implements MqttCallback {
 
     //notify the user 
 //    Notify.notifcation(context, context.getString(R.string.notification, notifyArgs), intent, R.string.notifyTitle);
-    Log.i("com.iker.mqttpahotest.MqttCallbackHandler.messageArrived","Message Arrived");
+    Log.i("messageArrived","Message Arrived");
 
     //update client history
     c.addAction(messageString);

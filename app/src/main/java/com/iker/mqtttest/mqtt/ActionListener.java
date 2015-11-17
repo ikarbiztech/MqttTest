@@ -1,14 +1,11 @@
+package com.iker.mqtttest.mqtt;
 
-package com.iker.mqttpahotest.mqtt;
 
-
-import com.iker.mqttpahotest.R;
-import com.iker.mqttpahotest.mqtt.Connection.*;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import android.content.Context;
-import android.util.Log;
+
 
 
 /**

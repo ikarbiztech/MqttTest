@@ -1,4 +1,4 @@
-package com.iker.mqttpahotest.mqtt;
+package com.iker.mqtttest.mqtt;
 
 
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
@@ -115,16 +114,14 @@ public class MqttAccess  {
         // create a client handle
         clientHandle = uri + clientId;
 
-        // last will message
+
         String message = (String) data.get(ActivityConstants.message);
         String topic = (String) data.get(ActivityConstants.topic);
         Integer qos = (Integer) data.get(ActivityConstants.qos);
         Boolean retained = (Boolean) data.get(ActivityConstants.retained);
 
         // connection options
-
         String username = (String) data.get(ActivityConstants.username);
-
         String password = (String) data.get(ActivityConstants.password);
 
         int timeout = (Integer) data.get(ActivityConstants.timeout);
@@ -207,8 +204,9 @@ public class MqttAccess  {
                 Log.e("Topic"+i,topics[i]);
             }
             Log.e("QOS", String.valueOf(data.getInt(ActivityConstants.qos)));
-//            connection = Connections.getInstance(context).getConnection(clientHandle);
+            connection = Connections.getInstance(context).getConnection(clientHandle);
             MqttAndroidClient client = connection.getClient();
+            // When I reach this point, inside the "client.subscribe()" the "this.mqttService.subscribe(this.clientHandle, topic, qos, (String)null, activityToken);" aparently is NULL (no idea why) and I don't get hoy it is initialized!!
             client.subscribe(topic,data.getInt(ActivityConstants.qos),null,action1);
 
 //            client.subscribe(topic, data.getInt(ActivityConstants.qos),context,action1);
