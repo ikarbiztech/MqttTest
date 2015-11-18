@@ -12,6 +12,8 @@ import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * Created by CONSULTANT on 13/11/2015.
@@ -71,7 +73,6 @@ public class MqttAccess  {
 
         MqttConnectOptions conOpt = new MqttConnectOptions();
 
-
         // The basic client information
         String server = (String) data.get(ActivityConstants.server);
         String clientId = (String) data.get(ActivityConstants.clientId);
@@ -91,6 +92,7 @@ public class MqttAccess  {
         uri = uri + server + ":" + port;
 
         MqttAndroidClient client;
+
         client = Connections.getInstance(context).createClient(context, uri, clientId);
 
         if (ssl){
@@ -127,10 +129,11 @@ public class MqttAccess  {
         int timeout = (Integer) data.get(ActivityConstants.timeout);
         int keepalive = (Integer) data.get(ActivityConstants.keepalive);
 
-        connection = new Connection(clientHandle, clientId, server, port, context, client, ssl);
-
+//        connection = new Connection(clientHandle, clientId, server, port, context, client, ssl);
+        connection = Connection.createConnection(clientId,server,port,context,ssl);
         String[] actionArgs = new String[1];
         actionArgs[0] = clientId;
+
         connection.changeConnectionStatus(Connection.ConnectionStatus.CONNECTING);
 
         conOpt.setCleanSession(cleanSession);
@@ -142,6 +145,7 @@ public class MqttAccess  {
         if (!password.equals(ActivityConstants.empty)) {
             conOpt.setPassword(password.toCharArray());
         }
+
 
         final ActionListener callback = new ActionListener(context, ActionListener.Action.CONNECT, clientHandle, actionArgs);
 
@@ -168,11 +172,21 @@ public class MqttAccess  {
 
         connection.addConnectionOptions(conOpt);
         Connections.getInstance(context).addConnection(connection);
+        try {
+
+            System.out.println(Arrays.toString(client.getClass().getFields()));
+            Field bindedService = client.getClass().getDeclaredField("bindedService");
+            Log.i("Is server Accesible1? ", bindedService.isAccessible() ? "true" : "false");
+            bindedService.setAccessible(true);
+            Log.i("Is server Accesible? ", bindedService.isAccessible() ? "true" : "false");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
         if (doConnect) {
             try {
                 client.connect(conOpt, callback
                 );
-               /* String[] topics = new String[1];
+              /*  String[] topics = new String[1];
                 topics[0] = topic;
                 ActionListener action1 = new ActionListener(context, ActionListener.Action.SUBSCRIBE, clientHandle, topics);
                 client.subscribe(topic, data.getInt(ActivityConstants.qos), null, action1);*/
@@ -183,6 +197,7 @@ public class MqttAccess  {
                         "MqttException Occured", e);
             }
         }
+        Log.i("Is client Connected?? ", client.isConnected()?"Yes":"No");
         return doConnect;
     }
 
