@@ -1,20 +1,28 @@
 package com.iker.mqtttest.mqtt;
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttClientPersistence;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  * Created by CONSULTANT on 11/11/2015.
  */
-public class Client extends MqttClient{
+public class Client implements MqttCallback {
 
 
-    public Client(String serverURI, String clientId, MqttClientPersistence persistence) throws MqttException {
-        super(serverURI, clientId, persistence);
+
+    @Override
+    public void connectionLost(Throwable throwable) {
+
     }
 
-    public Client(String serverURI, String clientId) throws MqttException {
-        super(serverURI, clientId);
+    @Override
+    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
     }
 }
